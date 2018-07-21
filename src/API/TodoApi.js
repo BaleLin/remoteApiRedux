@@ -38,7 +38,7 @@
          console.log(name);
          this.todoObject.todos.forEach(item=>{
              if(item.id==viewId){
-                 item.name=name;
+                 item.content=name;
                  console.log("改变后的"+name);
              }
          });

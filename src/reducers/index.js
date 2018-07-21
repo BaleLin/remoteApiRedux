@@ -5,7 +5,6 @@ export default  (state={todos:[],allStatus:Todo.ALL}, action) => {
         case 'ADD_TODO':{
             let newState = JSON.parse(JSON.stringify(state));
             newState.todos = [...action.todosObject.afeterHandleTodos];
-            console.log("add"+newState);
             console.log("add"+JSON.stringify(newState));
             return newState
         }

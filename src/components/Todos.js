@@ -22,7 +22,6 @@ export default class ListContent extends Component {
     }
 
     render() {
-        console.log("render"+JSON.stringify(this.props.todos));
         return (
             <div >
                 <ol>
@@ -37,7 +36,7 @@ export default class ListContent extends Component {
                             />
 
                             <span onKeyPress={e => this.changeToOnlyRead(e,item.id)} onDoubleClick={e => this.changeToEditable(e)}>
-                                {item.name}
+                                {item.content}
                                   </span>
                         </li>
                     )}
