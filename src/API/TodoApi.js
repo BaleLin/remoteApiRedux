@@ -1,11 +1,8 @@
 import {addTodo, changeCheck, changeContent,filterTodo,initTodo} from "../actions";
-
 const axios = require('axios');
 const todoApi = {
      todoObject:{
-         todos:[
-             {id:1,content:"sass",status:"active"}
-         ],
+         todos:[],
          filter:"all"
      },
     updateServerDAta(dispatch,oprationType){
@@ -15,28 +12,23 @@ const todoApi = {
                const {id,content,status} = serviceData;
                return {id,content,status};
            });
-             console.log("aa"+this.todoObject.todos);
              switch (oprationType) {
-                 case "初始":dispatch(addTodo(this.filterTodos()));
+                 case "INIT_SERVICE":dispatch(addTodo(this.filterTodos()));
                      break;
-                 case "添加":dispatch(addTodo(this.filterTodos()));
+                 case "ADD_SERVICE":dispatch(addTodo(this.filterTodos()));
                  break;
-                 case "勾选": dispatch(changeCheck(this.filterTodos()));
+                 case "CHEACK_SERVICE": dispatch(changeCheck(this.filterTodos()));
                  break;
-                 case "编辑": dispatch(changeContent(this.filterTodos()));
+                 case "EDIT_SERVICE": dispatch(changeContent(this.filterTodos()));
                  break;
-                 case "过滤": dispatch(initTodo(this.filterTodos()));
+                 case "FILLTER_SERVICE": dispatch(initTodo(this.filterTodos()));
                  break;
              }
 
          })
          .catch(function (error) {
-           // handle error
            console.log(error);
          })
-         .then(function () {
-           // always executed
-         });
     },
     initData(dispatch,oprationType){
         this.updateServerDAta(dispatch,oprationType)
@@ -56,44 +48,39 @@ const todoApi = {
          }
      },
     addItem(item,dispatch){
-      axios.post('http://localhost:8080/api/todos', {id:1,content: item.content,status: item.status})
+      axios.post('http://localhost:8080/api/todos', {content: item.content,status: item.status})
       .then((response)=> {
         console.log(response);
-          this.updateServerDAta(dispatch,"添加");
+          this.updateServerDAta(dispatch,"ADD_SERVICE");
 
       }).catch(function (error) {
         console.log(error);
-      });console.log("查询添加"+JSON.stringify(this.todoObject.todos));
-     // dispatch(addTodo(this.filterTodos()));
+      });
     },
      toggleActive(viewId,status,dispatch){
-         console.log("勾选前"+status);
          console.log(status==="active");
          axios.patch(`http://localhost:8080/api/todos/${viewId}`, {
              status:(status==="active"?"completed":"active")
          })
              .then((response)=> {
                  console.log(response);
-                 this.updateServerDAta(dispatch,"勾选");
+                 this.updateServerDAta(dispatch,"CHEACK_SERVICE");
 
              }).catch(function (error) {
              console.log(error);
          });
-        //  console.log("查询添加"+JSON.stringify(this.todoObject.todos));
-     },
+          },
      changeStatus(filter,dispatch){
          this.todoObject.filter = filter;
-         console.log("状态"+this.todoObject.filter);
-         this.updateServerDAta(dispatch,"过滤");
+         this.updateServerDAta(dispatch,"FILLTER_SERVICE");
      },
      updateItem(viewId,name,dispatch){
-         console.log("改内容前"+name);
-         axios.patch(`http://localhost:8080/api/todos/${viewId}`, {
+     axios.patch(`http://localhost:8080/api/todos/${viewId}`, {
              content:name
          })
              .then((response)=> {
                  console.log(response);
-                 this.updateServerDAta(dispatch,"编辑");
+                 this.updateServerDAta(dispatch,"EDIT_SERVICE");
 
              }).catch(function (error) {
              console.log(error);
