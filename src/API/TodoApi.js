@@ -1,4 +1,4 @@
-import {addTodo, changeCheck} from "../actions";
+import {addTodo, changeCheck, changeContent,filterTodo} from "../actions";
 
 const axios = require('axios');
 const todoApi = {
@@ -20,6 +20,10 @@ const todoApi = {
                  case "添加":dispatch(addTodo(this.filterTodos()));
                  break;
                  case "勾选": dispatch(changeCheck(this.filterTodos()));
+                 break;
+                 case "编辑": dispatch(changeContent(this.filterTodos()));
+                 break;
+                 case "过滤": dispatch(filterTodo(this.filterTodos()));
                  break;
              }
 
@@ -72,22 +76,23 @@ const todoApi = {
          });
         //  console.log("查询添加"+JSON.stringify(this.todoObject.todos));
      },
-     changeStatus(filter){
+     changeStatus(filter,dispatch){
          this.todoObject.filter = filter;
          console.log("状态"+this.todoObject.filter);
-        return this.filterTodos();
+         this.updateServerDAta(dispatch,"过滤");
      },
-     updateItem(viewId,name){
-         console.log(viewId);
-         console.log(name);
-         this.todoObject.todos.forEach(item=>{
-             if(item.id==viewId){
-                 item.content=name;
-                 console.log("改变后的"+name);
-             }
-         });
+     updateItem(viewId,name,dispatch){
+         console.log("改内容前"+name);
+         axios.patch(`http://localhost:8080/api/todos/${viewId}`, {
+             content:name
+         })
+             .then((response)=> {
+                 console.log(response);
+                 this.updateServerDAta(dispatch,"编辑");
 
-         return this.filterTodos();
+             }).catch(function (error) {
+             console.log(error);
+         });
      }
 
 }

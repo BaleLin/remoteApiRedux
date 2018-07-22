@@ -15,8 +15,8 @@ const mapDispatchToProps = (dispatch, ownProps) =>{
             const todosObject = todoApi.toggleActive(viewId,status,dispatch);
             } ,
         updateItemContent:(viewId,name) => {
-            const todosObject = todoApi.updateItem(viewId,name);
-            dispatch(changeContent(todosObject))
+            const todosObject = todoApi.updateItem(viewId,name,dispatch);
+
         },
 
     }

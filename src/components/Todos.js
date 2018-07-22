@@ -11,10 +11,14 @@ export default class ListContent extends Component {
     }
 
     changeToOnlyRead(event,id) {
-       event.target.setAttribute('contentEditable', 'false');
-       event.target.focus();
-       console.log("当前改变"+event.target.innerHTML)
-       this.props.updateItemContent(id, event.target.innerHTML);
+        const keycode = (event.keyCode
+            ? event.keyCode
+            : event.which);
+        if(keycode===13) {
+            event.target.setAttribute('contentEditable', 'false');
+            event.target.focus();
+            this.props.updateItemContent(id, event.target.innerHTML);
+        }
 
  }
     toggleActive = (id,status) => {

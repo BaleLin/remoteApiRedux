@@ -12,8 +12,7 @@ const mapStateToProps = (state, ownProps) =>{
 const mapDispatchToProps = (dispatch, ownProps) =>{
     return {
         changeStatusHandler:(ViewStatus) => {
-            const todosObject = todoApi.changeStatus(ViewStatus);
-            dispatch(filterTodo(todosObject))
+            const todosObject = todoApi.changeStatus(ViewStatus,dispatch);
         },
     }
 }
