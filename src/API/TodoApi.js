@@ -57,7 +57,7 @@ const todoApi = {
       });
         this.todoObject.todos.push(item);
         console.log("查询添加"+JSON.stringify(this.todoObject.todos));
-       // dispatch(addTodo(this.filterTodos()));
+      dispatch(addTodo(this.filterTodos()));
     },
      toggleActive(viewId){
          this.todoObject.todos.forEach(item=>{
