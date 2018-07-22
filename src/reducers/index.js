@@ -22,7 +22,7 @@ export default  (state={todos:[],allStatus:Todo.ALL}, action) => {
         }
         case 'FILTER_TODO': {      
             let newState = JSON.parse(JSON.stringify(state));
-            newState.allStatus = [...action.todosObject.status];
+            newState.allStatus = [...action.todosObject.filter];
             newState.todos = [...action.todosObject.afeterHandleTodos];
             console.log("筛选"+JSON.stringify(newState));
             return newState

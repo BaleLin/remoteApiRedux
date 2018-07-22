@@ -26,12 +26,12 @@ export default class ListContent extends Component {
             <div >
                 <ol>
                     {this.props.todos.map(item =>
-                        <li className = {item.isComplete ? 'checked':''}>
+                        <li className = {item.status==="completed" ? 'checked':''}>
                             <input
                                 type="checkbox"
                                 className="done-todo"
                                 // defaultChecked={item.isCompleted}
-                                checked={item.isComplete?'checked':''}
+                                checked={item.status==="completed"?'checked':''}
                                 onClick={e => this.toggleActive(item.id)}
                             />
 
