@@ -1,4 +1,4 @@
-import {addTodo} from "../actions";
+import {addTodo, changeCheck} from "../actions";
 
 const axios = require('axios');
 const todoApi = {
@@ -8,7 +8,7 @@ const todoApi = {
          ],
          filter:"all"
      },
-    updateServerDAta(dispatch){
+    updateServerDAta(dispatch,oprationType){
        axios.get('http://localhost:8080/api/todos')
          .then((response)=> {
              this.todoObject.todos=response.data._embedded.todos.map(serviceData=>{
@@ -16,7 +16,13 @@ const todoApi = {
                return {id,content,status};
            });
              console.log("aa"+this.todoObject.todos);
-             dispatch(addTodo(this.filterTodos()));
+             switch (oprationType) {
+                 case "添加":dispatch(addTodo(this.filterTodos()));
+                 break;
+                 case "勾选": dispatch(changeCheck(this.filterTodos()));
+                 break;
+             }
+
          })
          .catch(function (error) {
            // handle error
@@ -41,35 +47,30 @@ const todoApi = {
          }
      },
     addItem(item,dispatch){
-         let self = this;
-      axios.post('http://localhost:8080/api/todos', {
-          id:1,
-        content: item.content,
-        status: item.status
-      })
-      .then(function (response) {
+      axios.post('http://localhost:8080/api/todos', {id:1,content: item.content,status: item.status})
+      .then((response)=> {
         console.log(response);
-          self.updateServerDAta(dispatch);
+          this.updateServerDAta(dispatch,"添加");
 
-      })
-      .catch(function (error) {
+      }).catch(function (error) {
         console.log(error);
-      });
-        this.todoObject.todos.push(item);
-        console.log("查询添加"+JSON.stringify(this.todoObject.todos));
-      dispatch(addTodo(this.filterTodos()));
+      });console.log("查询添加"+JSON.stringify(this.todoObject.todos));
+     // dispatch(addTodo(this.filterTodos()));
     },
-     toggleActive(viewId){
-         this.todoObject.todos.forEach(item=>{
-            if(item.id==viewId){
-               if (item.status==="active") {
-                   item.status = "completed"
-               }else {
-                   item.status = "active"
-               }
-            }
-        });
-           return this.filterTodos();
+     toggleActive(viewId,status,dispatch){
+         console.log("勾选前"+status);
+         console.log(status==="active");
+         axios.patch(`http://localhost:8080/api/todos/${viewId}`, {
+             status:(status==="active"?"completed":"active")
+         })
+             .then((response)=> {
+                 console.log(response);
+                 this.updateServerDAta(dispatch,"勾选");
+
+             }).catch(function (error) {
+             console.log(error);
+         });
+        //  console.log("查询添加"+JSON.stringify(this.todoObject.todos));
      },
      changeStatus(filter){
          this.todoObject.filter = filter;

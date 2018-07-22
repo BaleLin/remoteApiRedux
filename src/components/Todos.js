@@ -17,8 +17,8 @@ export default class ListContent extends Component {
        this.props.updateItemContent(id, event.target.innerHTML);
 
  }
-    toggleActive = (id) => {
-        this.props.toggleActiveHandler(id);
+    toggleActive = (id,status) => {
+        this.props.toggleActiveHandler(id,status);
     }
 
     render() {
@@ -32,7 +32,7 @@ export default class ListContent extends Component {
                                 className="done-todo"
                                 // defaultChecked={item.isCompleted}
                                 checked={item.status==="completed"?'checked':''}
-                                onClick={e => this.toggleActive(item.id)}
+                                onClick={e => this.toggleActive(item.id,item.status)}
                             />
 
                             <span onKeyPress={e => this.changeToOnlyRead(e,item.id)} onDoubleClick={e => this.changeToEditable(e)}>

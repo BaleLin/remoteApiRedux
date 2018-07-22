@@ -11,9 +11,9 @@ const mapStateToProps = (state, ownProps) =>{
 
 const mapDispatchToProps = (dispatch, ownProps) =>{
     return {
-        toggleActiveHandler:(viewId) => {
-            const todosObject = todoApi.toggleActive(viewId);
-            dispatch(changeCheck(todosObject)) } ,
+        toggleActiveHandler:(viewId,status) => {
+            const todosObject = todoApi.toggleActive(viewId,status,dispatch);
+            } ,
         updateItemContent:(viewId,name) => {
             const todosObject = todoApi.updateItem(viewId,name);
             dispatch(changeContent(todosObject))
