@@ -1,4 +1,4 @@
-import {addTodo, changeCheck, changeContent,filterTodo} from "../actions";
+import {addTodo, changeCheck, changeContent,filterTodo,initTodo} from "../actions";
 
 const axios = require('axios');
 const todoApi = {
@@ -17,13 +17,15 @@ const todoApi = {
            });
              console.log("aa"+this.todoObject.todos);
              switch (oprationType) {
+                 case "初始":dispatch(addTodo(this.filterTodos()));
+                     break;
                  case "添加":dispatch(addTodo(this.filterTodos()));
                  break;
                  case "勾选": dispatch(changeCheck(this.filterTodos()));
                  break;
                  case "编辑": dispatch(changeContent(this.filterTodos()));
                  break;
-                 case "过滤": dispatch(filterTodo(this.filterTodos()));
+                 case "过滤": dispatch(initTodo(this.filterTodos()));
                  break;
              }
 
@@ -35,6 +37,9 @@ const todoApi = {
          .then(function () {
            // always executed
          });
+    },
+    initData(dispatch,oprationType){
+        this.updateServerDAta(dispatch,oprationType)
     },
      filterTodos(){
          let todos = this.todoObject.todos;
