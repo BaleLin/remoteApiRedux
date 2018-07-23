@@ -3,7 +3,11 @@ import './todo.css';
 import AddTodo from './container/InputTextContainer'
 import Todos from './container/TodosContainer'
 import FilterTodo from './container/FilterTodoContainer'
-
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from 'react-router-dom'
 class App extends Component {
 
     render() {
@@ -16,7 +20,13 @@ class App extends Component {
                     </p>
                 </div>
                 <AddTodo />
-                <Todos />
+                <Router>
+                    <div>
+                        <Route exact path="/" component={Todos}></Route>
+                        <Route exact path="/:status" component={Todos}></Route>
+                    </div>
+
+                </Router>
                 <FilterTodo />
             </div>);
     }

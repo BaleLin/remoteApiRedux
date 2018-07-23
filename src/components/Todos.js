@@ -26,10 +26,13 @@ export default class ListContent extends Component {
     }
 
     render() {
+        console.log("render"+this.props.todos)
         return (
             <div >
                 <ol>
-                    {this.props.todos.map(item =>
+                    {
+
+                        this.props.todos.map(item =>
                         <li className = {item.status==="completed" ? 'checked':''}>
                             <input
                                 type="checkbox"
