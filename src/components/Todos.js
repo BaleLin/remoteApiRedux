@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { Checkbox } from 'antd';
+import 'antd/dist/antd.css';
 export default class ListContent extends Component {
     constructor(props) {
         super(props);
@@ -34,8 +35,7 @@ export default class ListContent extends Component {
 
                         this.props.todos.map(item =>
                         <li className = {item.status==="completed" ? 'checked':''}>
-                            <input
-                                type="checkbox"
+                            <Checkbox
                                 className="done-todo"
                                 // defaultChecked={item.isCompleted}
                                 checked={item.status==="completed"?'checked':''}

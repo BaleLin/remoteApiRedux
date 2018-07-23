@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import 'antd/dist/antd.css';
 export default class FilterList extends React.Component {
     changeStatus=(status)=>{
         this.props.changeStatusHandler(status);
